@@ -31,7 +31,6 @@ export function wsConnect(url: String) {
     socket.onopen = function (event) {
       socket.send("Hello Server!");
       store.commit("setSocket", socket);
-      console.log(store.state.socket);
       resolve(event);
     };
 

@@ -1,15 +1,18 @@
 <template>
   <!-- <img alt="Vue logo" src="./assets/logo.png" /> -->
+  <Login />
   <Game />
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import Game from "./components/Game.vue";
+import Login from "./components/Login.vue";
 
 @Options({
   components: {
     Game,
+    Login,
   },
 })
 export default class App extends Vue {}

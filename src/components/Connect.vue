@@ -7,7 +7,7 @@
       v-model="serverIp"
       @keyup="$event.key != 'Enter' || connect()"
     />
-    <button @click="login" :disabled="isLoading">{{ buttonText }}</button>
+    <button @click="connect" :disabled="isLoading">{{ buttonText }}</button>
   </div>
 </template>
 

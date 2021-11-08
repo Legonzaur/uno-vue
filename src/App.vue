@@ -25,10 +25,10 @@ import { useStore } from "@/store";
   },
   computed: {
     connected() {
-      return !!this.$store.state.socket;
+      return this.$store.state.connected;
     },
     logged() {
-      return false;
+      return this.$store.state.logged;
     },
   },
 })

@@ -28,11 +28,12 @@ export function useStore() {
 export function wsConnect(url: String) {
   return new Promise((resolve, reject) => {
     const socket = new WebSocket("ws://" + url);
-    socket.addEventListener("open", function (event) {
+    socket.onopen = function (event) {
       socket.send("Hello Server!");
-      useStore().commit("setSocket", socket);
+      store.commit("setSocket", socket);
+      console.log(store.state.socket);
       resolve(event);
-    });
+    };
 
     // Listen for messages
     socket.addEventListener("message", function (event) {

@@ -1,8 +1,8 @@
 <template>
   <!-- <img alt="Vue logo" src="./assets/logo.png" /> -->
   <Connect v-if="!connected" />
-  <Login v-if="!connected && !logged" />
-  <Game />
+  <Login v-if="connected && !logged" />
+  <Game v-if="connected && logged" />
 </template>
 
 <script lang="ts">

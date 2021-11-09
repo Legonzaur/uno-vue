@@ -18,9 +18,14 @@ import { useStore } from "@/store";
 
 import { wsConnect } from "@/socket";
 
+interface Data {
+  serverIp: string;
+  isLoading: boolean;
+  buttonText: string;
+}
 export default defineComponent({
   data() {
-    return {
+    return <Data>{
       serverIp: "localhost:8081",
       isLoading: false,
       buttonText: "Connect",
@@ -38,6 +43,7 @@ export default defineComponent({
       wsConnect(this.serverIp)
         .then(() => {
           this.buttonText = "Connected";
+          this.$store.commit("connect");
         })
         .catch(() => {
           this.buttonText = "Connection failed";

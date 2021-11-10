@@ -2,7 +2,7 @@
   <!-- <img alt="Vue logo" src="./assets/logo.png" /> -->
   <Connect v-if="!connected" />
   <Login v-if="connected && !logged" />
-  <Game v-if="connected && logged" />
+  <Game v-if="connected" />
 </template>
 
 <script lang="ts">

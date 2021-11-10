@@ -4,12 +4,13 @@ export interface GameMessage {
   id: number;
 }
 
-class DumbWebSocket extends WebSocket {
+export class DumbWebSocket extends WebSocket {
   pingTimeout: number = 0;
   awaitingMessages: ((
     value: GameMessage | PromiseLike<GameMessage>
   ) => void)[] = [];
   messageId = 0;
+  functions: any = {};
   constructor(url: string) {
     super(url);
     this.onmessage = (event) => {
@@ -19,15 +20,23 @@ class DumbWebSocket extends WebSocket {
         return;
       }
 
-      const data = JSON.parse(event.data);
+      const data = <GameMessage>JSON.parse(event.data);
       console.log(
         new Date().toLocaleTimeString() + " Message from server ",
         data.order,
-        data.data
+        data.data,
+        data
       );
+      //If message is an answer from a request
       if (data.id) {
         this.awaitingMessages[data.id](data);
         delete this.awaitingMessages[data.id];
+        return;
+      }
+      //If message is a broadcast or an information from the server
+      if (this.functions[data.order]) {
+        this.functions[data.order](data.data);
+        return;
       }
     };
 

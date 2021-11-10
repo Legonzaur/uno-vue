@@ -1,10 +1,5 @@
 <template>
   <div id="login">
-    <div>Game Status : {{ gameStatus }}</div>
-    <span>Logged Users : </span>
-    <ul id="loggedUsers">
-      <li v-for="user in loggedUsers" :key="user">{{ user }}</li>
-    </ul>
     <span>Choose Username : </span
     ><input
       type="text"
@@ -21,12 +16,6 @@ import { defineComponent } from "vue";
 import { useStore } from "@/store";
 
 import { getSocket } from "@/socket";
-
-enum GameStatus {
-  Waiting,
-  Ongoing,
-  Finished,
-}
 
 interface Data {
   isLoading: boolean;
@@ -53,15 +42,12 @@ export default defineComponent({
     return { store, socket };
   },
   created() {
-    this.getInfo();
+    this.socket.send("getLoggedUsers").then((message) => {
+      this.loggedUsers = message.data;
+    });
   },
   props: {},
   methods: {
-    async getInfo() {
-      this.loggedUsers = (await this.socket.send("getLoggedUsers")).data;
-      this.gameStatus =
-        GameStatus[(await this.socket.send("getGameStatus")).data];
-    },
     async login() {
       if (
         this.loggedUsers.indexOf(this.username) > -1 ||
